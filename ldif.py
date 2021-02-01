@@ -53,7 +53,8 @@ class LdifParser:
         except Exception as err:
             raise LdifParsingException(err)
     
-    @static
+    @staticmethod
     def dtToIso(dtstr):
-        pass
+        # TODO:  parse string using pure python based on python 2.6.5
+        return dtstr
         
