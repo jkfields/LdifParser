@@ -3,6 +3,9 @@
 .. codeauthor:: Jeffrey Fields <jkfields@yahoo.com>
 """
 
+class LdifParsingException(Exception):
+    pass
+  
 class LdifParser:
   def parse(self, ldifattrs):
       """
@@ -22,10 +25,27 @@ class LdifParser:
               # the attr and value are colon-separated
               attr, value = [ str.strip() for str in ln.split(':', 1) ]
             
-              # convert and number values to int
-              # convers any boolean values
+              # convert and number values to int, boolean values and date string to ISO-8601 format
               if value.isdigit():  value = int(value)
               elif value.lower() == 'true':  value = True
               elif value.lower() == 'false':  value = False
-              elif "Time" in attr:  value = dtToIso(value)
+              #elif "Time" in attr:  value = dtToIso(value)
               else:  pass
+          
+              # check for additional values for existing attr
+              if attr in rec.keys():
+                  # if first duplicate, converts dict value to list
+                  if not isinstance(rec.get(attr), list):
+                      rec[attr] = [ lrec.get(attr) ]
+                      
+                  # append the new value
+                  rec[attr].append(value)
+              else:
+                  # add the attr and value to the dict
+                  rec[attr] = value
+          else:
+              yield rec
+              rec.clear()
+              
+      except Exception as err:
+        raise LdifParsingException(err)
