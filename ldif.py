@@ -28,12 +28,13 @@ class LdifParser:
                     # split on the 1st colon in the string
                     attr, value = [ str.strip() for str in ln.split(':', 1) ]
                     
-                    # convert and number values to int, boolean values, and date string to ISO-8601 format
+                    # convert and numeric strings to int
                     if value.isdigit():  value = int(value)
+                    # convert true/false strings to boolean
                     elif value.lower() == 'true':  value = True
                     elif value.lower() == 'false':  value = False
+                    # convert date string to ISO-8601 formatted string
                     elif "Time" in attr:  value = dtToIso(value)
-                    else:  pass
                     
                     # check for additional values for existing attrs
                     if attr in rec.keys():
