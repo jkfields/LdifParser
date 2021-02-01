@@ -17,7 +17,8 @@ class LdifParser:
     def parse(self, ldifattrs)
         """
         parse the ldif attribute data received from an ldapsearch
-        query against a Sun/Oracle Directory Server
+        query against a Sun/Oracle Directory Server and create a
+        dict of the attributes and associated values
       
         :: each record can have multiple values for a single attribute
         :: each record is separated by a blank line
