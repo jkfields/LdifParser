@@ -3,8 +3,15 @@
 .. codeauthor:: Jeffrey Fields <jkfields@yahoo.com>
 """
 
+from dateutil import parser
+from pprint import PrettyPrinter
+
+pp = PrettyPrinter(indent=4).pprint()
+
+
 class LdifParsingException(Exception):
     pass
+
 
 class LdifParser:
     def parse(self, ldifattrs)
@@ -56,6 +63,15 @@ class LdifParser:
     
     @staticmethod
     def dtToIso(dtstr):
-        # TODO:  parse string using pure python based on python 2.6.5
-        return dtstr
+        """
+        TODO:  parse string using pure python based on python 2.6.5
+               for now we're using dateuil.parser from Python 2.7
+               
+        Our input date string format should be "yyyymmddhhmmss.0000"
+        Return the unix epoc is iso format on error
+        """
+        try:
+            return parser.parse(dtstr[:14]).isoformat()
+        except ValueError as err:
+            return "1970-01-01 00:00:01"
         
