@@ -22,7 +22,8 @@ class LdifParser:
           
           # is this the blank line?
           if ln.strip():
-              # the attr and value are colon-separated
+              # the attr and value are colon-separated; some values are also comma separate; split
+              # on the 1st colon in the string
               attr, value = [ str.strip() for str in ln.split(':', 1) ]
             
               # convert and number values to int, boolean values, and date string to ISO-8601 format
