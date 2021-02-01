@@ -73,5 +73,5 @@ class LdifParser:
         try:
             return parser.parse(dtstr[:14]).isoformat()
         except ValueError as err:
-            return "1970-01-01 00:00:01"
+            return "1970-01-01T00:00:01"
         
