@@ -25,7 +25,7 @@ class LdifParser:
               # the attr and value are colon-separated
               attr, value = [ str.strip() for str in ln.split(':', 1) ]
             
-              # convert and number values to int, boolean values and date string to ISO-8601 format
+              # convert and number values to int, boolean values, and date string to ISO-8601 format
               if value.isdigit():  value = int(value)
               elif value.lower() == 'true':  value = True
               elif value.lower() == 'false':  value = False
